@@ -64,6 +64,7 @@ import DebugResponseTimeIndicator from './react/debugs/DebugResponseTimeIndicato
 import RendererDebugMenu from './react/RendererDebugMenu'
 import CreditsAboutModal from './react/CreditsAboutModal'
 import GlobalOverlayHints from './react/GlobalOverlayHints'
+import FullscreenTime from './react/FullscreenTime'
 
 const isFirefox = ua.getBrowser().name === 'Firefox'
 if (isFirefox) {
@@ -174,6 +175,7 @@ const InGameUi = () => {
 
       <PerComponentErrorBoundary>
         <PauseScreen />
+        <FullscreenTime />
         <MineflayerPluginHud />
         <MineflayerPluginConsole />
         {showUI && <TouchInteractionHint />}
