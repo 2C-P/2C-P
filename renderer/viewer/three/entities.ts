@@ -237,6 +237,16 @@ export class Entities {
     return Object.values(this.entities).filter(entity => entity.visible).length
   }
 
+  getDebugString (): string {
+    const totalEntities = Object.keys(this.entities).length
+    const visibleEntities = this.entitiesRenderingCount
+
+    const playerEntities = Object.values(this.entities).filter(entity => entity.playerObject)
+    const visiblePlayerEntities = playerEntities.filter(entity => entity.visible)
+
+    return `${visibleEntities}/${totalEntities} ${visiblePlayerEntities.length}/${playerEntities.length}`
+  }
+
   constructor (public worldRenderer: WorldRendererThree) {
     this.debugMode = 'none'
     this.onSkinUpdate = () => { }

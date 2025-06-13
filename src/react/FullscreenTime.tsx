@@ -73,28 +73,31 @@ const FullscreenTime = () => {
   if (topRightTimeDisplay === 'only-fullscreen' && !fullScreen) return null
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 'env(safe-area-inset-top, 5px)',
-      right: 'env(safe-area-inset-right, 5px)',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '4px',
-      padding: '1px 3px',
-      background: 'rgba(0, 0, 0, 0.75)',
-      borderRadius: '2px',
-      fontSize: 8,
-      color: 'white',
-      fontFamily: 'minecraft, mojangles, monospace',
-      zIndex: 1,
-      pointerEvents: 'none'
-    }}>
+    <div
+      className='top-right-time'
+      style={{
+        position: 'fixed',
+        top: 'env(safe-area-inset-top, 5px)',
+        right: 'env(safe-area-inset-right, 5px)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '4px',
+        padding: '1px 3px',
+        background: 'rgba(0, 0, 0, 0.75)',
+        borderRadius: '2px',
+        fontSize: 8,
+        color: 'white',
+        fontFamily: 'minecraft, mojangles, monospace',
+        zIndex: 1,
+        pointerEvents: 'none'
+      }}
+    >
       <span>{time}</span>
       {batteryInfo && (
         <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
           <PixelartIcon
             iconName={getBatteryIcon(batteryInfo.level, batteryInfo.charging)}
-            styles={{ fontSize: 12 }}
+            styles={{ fontSize: 10 }}
           />
           <span>{batteryInfo.level}%</span>
         </div>

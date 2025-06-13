@@ -124,6 +124,9 @@ const createGraphicsBackend: GraphicsBackendLoader = (initOptions: GraphicsInitO
       if (worldRenderer) worldRenderer.renderingActive = rendering
     },
     getDebugOverlay: () => ({
+      get entitiesString () {
+        return worldRenderer?.entities.getDebugString()
+      },
     }),
     updateCamera (pos: Vec3 | null, yaw: number, pitch: number) {
       worldRenderer?.setFirstPersonCamera(pos, yaw, pitch)
