@@ -28,6 +28,7 @@ export interface StoreServerItem extends BaseServerInfo {
   optionsOverride?: Record<string, any>
   autoLogin?: Record<string, string>
   numConnects?: number // Track number of connections
+  isRecommended?: boolean
 }
 
 type StorageData = {
