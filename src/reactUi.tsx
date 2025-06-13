@@ -163,7 +163,7 @@ const InGameUi = () => {
           {showMinimap !== 'never' && <MinimapProvider adapter={adapter} displayMode='minimapOnly' />}
           {!disabledUiParts.includes('title') && <TitleProvider />}
           {!disabledUiParts.includes('scoreboard') && <ScoreboardProvider />}
-          {!disabledUiParts.includes('effects-indicators') && <IndicatorEffectsProvider />}
+          <IndicatorEffectsProvider displayEffects={!disabledUiParts.includes('effects')} displayIndicators={!disabledUiParts.includes('indicators')} />
           {!disabledUiParts.includes('crosshair') && <Crosshair />}
           {!disabledUiParts.includes('books') && <BookProvider />}
           {!disabledUiParts.includes('bossbars') && displayBossBars && <BossBarOverlayProvider />}
