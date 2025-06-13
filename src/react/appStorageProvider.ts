@@ -93,7 +93,17 @@ export const setStorageDataOnAppConfigLoad = (appConfig: AppConfig) => {
 }
 
 export const getRandomUsername = (appConfig: AppConfig) => {
-  return appConfig.defaultUsername?.replaceAll('{num}', () => Math.floor(Math.random() * 10).toString()) ?? ''
+  if (!appConfig.defaultUsername) return ''
+
+  const username = appConfig.defaultUsername
+    .replaceAll(/{(\d+)-(\d+)}/g, (_, start, end) => {
+      const min = Number(start)
+      const max = Number(end)
+      return Math.floor(Math.random() * (max - min + 1) + min).toString()
+    })
+    .replaceAll('{num}', () => Math.floor(Math.random() * 10).toString())
+
+  return username
 }
 
 export const appStorage = proxy({ ...defaultStorageData })

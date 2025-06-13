@@ -31,7 +31,7 @@
       }
     ]
   ],
-  "defaultUsername": "mcrafter{num}{num}{num}{num}",
+  "defaultUsername": "mcrafter{0-9999}",
   "mobileButtons": [
     {
       "action": "general.drop",
