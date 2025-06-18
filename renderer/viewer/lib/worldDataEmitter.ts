@@ -197,7 +197,9 @@ export class WorldDataEmitter extends (EventEmitter as new () => TypedEmitter<Wo
   async init (pos: Vec3) {
     this.updateViewDistance(this.viewDistance)
     this.emitter.emit('chunkPosUpdate', { pos })
-    this.emitter.emit('time', bot.time.timeOfDay)
+    if (bot?.time?.timeOfDay) {
+      this.emitter.emit('time', bot.time.timeOfDay)
+    }
     this.emitterGotConnected()
     const [botX, botZ] = chunkPos(pos)
 

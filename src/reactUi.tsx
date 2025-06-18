@@ -276,13 +276,17 @@ const PerComponentErrorBoundary = ({ children }) => {
   </ErrorBoundary>)
 }
 
-renderToDom(<App />, {
-  strictMode: false,
-  selector: '#react-root',
-})
+if (!new URLSearchParams(window.location.search).get('no-ui')) {
+  renderToDom(<App />, {
+    strictMode: false,
+    selector: '#react-root',
+  })
+}
 
 disableReactProfiling()
 function disableReactProfiling () {
+  if (window.reactPerfPatchApplied) return
+  window.reactPerfPatchApplied = true
   //@ts-expect-error
   window.performance.markOrig = window.performance.mark
   //@ts-expect-error

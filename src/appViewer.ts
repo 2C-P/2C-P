@@ -1,5 +1,5 @@
 import { WorldDataEmitter, WorldDataEmitterWorker } from 'renderer/viewer/lib/worldDataEmitter'
-import { PlayerStateRenderer } from 'renderer/viewer/lib/basePlayerState'
+import { getInitialPlayerState, PlayerStateRenderer } from 'renderer/viewer/lib/basePlayerState'
 import { subscribeKey } from 'valtio/utils'
 import { defaultWorldRendererConfig, WorldRendererConfig } from 'renderer/viewer/lib/worldrendererCommon'
 import { Vec3 } from 'vec3'
@@ -281,19 +281,31 @@ const initialMenuStart = async () => {
   if (appViewer.currentDisplay === 'world') {
     appViewer.resetBackend(true)
   }
-  appViewer.startPanorama()
+  const demo = new URLSearchParams(window.location.search).get('demo')
+  if (!demo) {
+    appViewer.startPanorama()
+    return
+  }
 
   // const version = '1.18.2'
-  // const version = '1.21.4'
-  // await appViewer.resourcesManager.loadMcData(version)
-  // const world = getSyncWorld(version)
-  // world.setBlockStateId(new Vec3(0, 64, 0), loadedData.blocksByName.water.defaultState)
-  // appViewer.resourcesManager.currentConfig = { version }
-  // await appViewer.resourcesManager.updateAssetsData({})
-  // appViewer.playerState = new BasePlayerState() as any
-  // await appViewer.startWorld(world, 3)
-  // appViewer.backend?.updateCamera(new Vec3(0, 64, 2), 0, 0)
-  // void appViewer.worldView!.init(new Vec3(0, 64, 0))
+  const version = '1.21.4'
+  const { loadMinecraftData } = await import('./connect')
+  const { getSyncWorld } = await import('../renderer/playground/shared')
+  await loadMinecraftData(version)
+  const world = getSyncWorld(version)
+  world.setBlockStateId(new Vec3(0, 64, 0), loadedData.blocksByName.water.defaultState)
+  world.setBlockStateId(new Vec3(1, 64, 0), loadedData.blocksByName.water.defaultState)
+  world.setBlockStateId(new Vec3(1, 64, 1), loadedData.blocksByName.water.defaultState)
+  world.setBlockStateId(new Vec3(0, 64, 1), loadedData.blocksByName.water.defaultState)
+  world.setBlockStateId(new Vec3(-1, 64, -1), loadedData.blocksByName.water.defaultState)
+  world.setBlockStateId(new Vec3(-1, 64, 0), loadedData.blocksByName.water.defaultState)
+  world.setBlockStateId(new Vec3(0, 64, -1), loadedData.blocksByName.water.defaultState)
+  appViewer.resourcesManager.currentConfig = { version }
+  appViewer.playerState.reactive = getInitialPlayerState()
+  await appViewer.resourcesManager.updateAssetsData({})
+  await appViewer.startWorld(world, 3)
+  appViewer.backend!.updateCamera(new Vec3(0, 65.7, 0), 0, -Math.PI / 2) // Y+1 and pitch = PI/2 to look down
+  void appViewer.worldView!.init(new Vec3(0, 64, 0))
 }
 window.initialMenuStart = initialMenuStart
 
