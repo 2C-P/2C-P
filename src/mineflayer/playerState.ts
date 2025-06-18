@@ -1,5 +1,5 @@
 import { HandItemBlock } from 'renderer/viewer/three/holdingBlock'
-import { getInitialPlayerState, PlayerStateRenderer } from 'renderer/viewer/lib/basePlayerState'
+import { getInitialPlayerState, getPlayerStateUtils, PlayerStateReactive, PlayerStateRenderer, PlayerStateUtils } from 'renderer/viewer/lib/basePlayerState'
 import { subscribe } from 'valtio'
 import { subscribeKey } from 'valtio/utils'
 import { gameAdditionalState } from '../globalState'
@@ -8,7 +8,7 @@ import { gameAdditionalState } from '../globalState'
  * can be used only in main thread. Mainly for more convenient reactive state updates.
  * In renderer/ directory, use PlayerStateControllerRenderer type or worldRenderer.playerState.
  */
-export class PlayerStateControllerMain implements PlayerStateRenderer {
+export class PlayerStateControllerMain {
   disableStateUpdates = false
 
   private timeOffGround = 0
@@ -18,7 +18,8 @@ export class PlayerStateControllerMain implements PlayerStateRenderer {
   private isUsingItem = false
   ready = false
 
-  reactive: PlayerStateRenderer['reactive']
+  reactive: PlayerStateReactive
+  utils: PlayerStateUtils
 
   constructor () {
     customEvents.on('mineflayerBotCreated', () => {
@@ -41,6 +42,7 @@ export class PlayerStateControllerMain implements PlayerStateRenderer {
   private botCreated () {
     console.log('bot created & plugins injected')
     this.reactive = getInitialPlayerState()
+    this.utils = getPlayerStateUtils(this.reactive)
     this.onBotCreatedOrGameJoined()
 
     const handleDimensionData = (data) => {

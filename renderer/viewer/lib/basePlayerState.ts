@@ -47,6 +47,17 @@ export const getInitialPlayerState = () => proxy({
   shouldHideHand: false,
   heldItemMain: undefined as HandItemBlock | undefined,
   heldItemOff: undefined as HandItemBlock | undefined,
+
+  cameraSpectatingEntity: undefined as number | undefined,
+})
+
+export const getPlayerStateUtils = (reactive: PlayerStateReactive) => ({
+  isSpectator () {
+    return reactive.gameMode === 'spectator'
+  },
+  isSpectatingEntity () {
+    return reactive.cameraSpectatingEntity !== undefined && reactive.gameMode === 'spectator'
+  }
 })
 
 export const getInitialPlayerStateRenderer = () => ({
@@ -54,10 +65,9 @@ export const getInitialPlayerStateRenderer = () => ({
 })
 
 export type PlayerStateReactive = ReturnType<typeof getInitialPlayerState>
+export type PlayerStateUtils = ReturnType<typeof getPlayerStateUtils>
 
-export interface PlayerStateRenderer {
-  reactive: PlayerStateReactive
-}
+export type PlayerStateRenderer = PlayerStateReactive
 
 export const getItemSelector = (playerState: PlayerStateRenderer, specificProperties: ItemSpecificContextProperties, item?: import('prismarine-item').Item) => {
   return {

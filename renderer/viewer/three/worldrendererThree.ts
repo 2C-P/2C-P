@@ -69,6 +69,9 @@ export class WorldRendererThree extends WorldRendererCommon {
   }
   fountains: Fountain[] = []
 
+  private currentPosTween?: tweenJs.Tween<THREE.Vector3>
+  private currentRotTween?: tweenJs.Tween<{ pitch: number, yaw: number }>
+
   get tilesRendered () {
     return Object.values(this.sectionObjects).reduce((acc, obj) => acc + (obj as any).tilesCount, 0)
   }
@@ -150,7 +153,7 @@ export class WorldRendererThree extends WorldRendererCommon {
   override watchReactivePlayerState () {
     super.watchReactivePlayerState()
     this.onReactivePlayerStateUpdated('inWater', (value) => {
-      this.scene.fog = value ? new THREE.Fog(0x00_00_ff, 0.1, this.displayOptions.playerState.reactive.waterBreathing ? 100 : 20) : null
+      this.scene.fog = value ? new THREE.Fog(0x00_00_ff, 0.1, this.playerStateReactive.waterBreathing ? 100 : 20) : null
     })
     this.onReactivePlayerStateUpdated('ambientLight', (value) => {
       if (!value) return
@@ -238,7 +241,7 @@ export class WorldRendererThree extends WorldRendererCommon {
   }
 
   getItemRenderData (item: Record<string, any>, specificProps: ItemSpecificContextProperties) {
-    return getItemUv(item, specificProps, this.resourcesManager, this.playerState)
+    return getItemUv(item, specificProps, this.resourcesManager, this.playerStateReactive)
   }
 
   async demoModel () {
@@ -430,7 +433,7 @@ export class WorldRendererThree extends WorldRendererCommon {
   }
 
   setFirstPersonCamera (pos: Vec3 | null, yaw: number, pitch: number) {
-    const yOffset = this.displayOptions.playerState.reactive.eyeHeight
+    const yOffset = this.playerStateReactive.eyeHeight
 
     this.updateCamera(pos?.offset(0, yOffset, 0) ?? null, yaw, pitch)
     this.media.tryIntersectMedia()
@@ -448,10 +451,28 @@ export class WorldRendererThree extends WorldRendererCommon {
         pos.y -= this.camera.position.y // Fix Y position of camera in world
       }
 
-      new tweenJs.Tween(this.cameraObject.position).to({ x: pos.x, y: pos.y, z: pos.z }, 50).start()
+      this.currentPosTween?.stop()
+      this.currentPosTween = new tweenJs.Tween(this.cameraObject.position).to({ x: pos.x, y: pos.y, z: pos.z }, this.playerStateUtils.isSpectatingEntity() ? 150 : 50).start()
       // this.freeFlyState.position = pos
     }
-    this.cameraShake.setBaseRotation(pitch, yaw)
+
+    if (this.playerStateUtils.isSpectatingEntity()) {
+      const rotation = this.cameraShake.getBaseRotation()
+      // wrap in the correct direction
+      let yawOffset = 0
+      const halfPi = Math.PI / 2
+      if (rotation.yaw < halfPi && yaw > Math.PI + halfPi) {
+        yawOffset = -Math.PI * 2
+      } else if (yaw < halfPi && rotation.yaw > Math.PI + halfPi) {
+        yawOffset = Math.PI * 2
+      }
+      this.currentRotTween?.stop()
+      this.currentRotTween = new tweenJs.Tween(rotation).to({ pitch, yaw: yaw + yawOffset }, 100)
+        .onUpdate(params => this.cameraShake.setBaseRotation(params.pitch, params.yaw - yawOffset)).start()
+    } else {
+      this.currentRotTween?.stop()
+      this.cameraShake.setBaseRotation(pitch, yaw)
+    }
   }
 
   debugChunksVisibilityOverride () {
@@ -508,7 +529,7 @@ export class WorldRendererThree extends WorldRendererCommon {
     const cam = this.cameraGroupVr instanceof THREE.Group ? this.cameraGroupVr.children.find(child => child instanceof THREE.PerspectiveCamera) as THREE.PerspectiveCamera : this.camera
     this.renderer.render(this.scene, cam)
 
-    if (this.displayOptions.inWorldRenderingConfig.showHand && this.playerState.reactive.gameMode !== 'spectator' /*  && !this.freeFlyMode */ && !this.renderer.xr.isPresenting) {
+    if (this.displayOptions.inWorldRenderingConfig.showHand && this.playerStateReactive.gameMode !== 'spectator' /*  && !this.freeFlyMode */ && !this.renderer.xr.isPresenting) {
       this.holdingBlock.render(this.camera, this.renderer, this.ambientLight, this.directionalLight)
       this.holdingBlockLeft.render(this.camera, this.renderer, this.ambientLight, this.directionalLight)
     }

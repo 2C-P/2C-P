@@ -61,16 +61,14 @@ export class CursorBlock {
     this.blockBreakMesh.name = 'blockBreakMesh'
     this.worldRenderer.scene.add(this.blockBreakMesh)
 
-    subscribeKey(this.worldRenderer.playerState.reactive, 'gameMode', () => {
+    this.worldRenderer.onReactivePlayerStateUpdated('gameMode', () => {
       this.updateLineMaterial()
     })
-
-    this.updateLineMaterial()
   }
 
   // Update functions
   updateLineMaterial () {
-    const inCreative = this.worldRenderer.displayOptions.playerState.reactive.gameMode === 'creative'
+    const inCreative = this.worldRenderer.playerStateReactive.gameMode === 'creative'
     const pixelRatio = this.worldRenderer.renderer.getPixelRatio()
 
     this.cursorLineMaterial = new LineMaterial({

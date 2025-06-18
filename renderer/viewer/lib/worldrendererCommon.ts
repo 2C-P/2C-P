@@ -16,7 +16,7 @@ import { HighestBlockInfo, CustomBlockModels, BlockStateModelInfo, getBlockAsset
 import { chunkPos } from './simpleUtils'
 import { addNewStat, removeAllStats, updatePanesVisibility, updateStatText } from './ui/newStats'
 import { WorldDataEmitterWorker } from './worldDataEmitter'
-import { PlayerStateRenderer } from './basePlayerState'
+import { getPlayerStateUtils, PlayerStateReactive, PlayerStateRenderer, PlayerStateUtils } from './basePlayerState'
 import { MesherLogReader } from './mesherlogReader'
 import { setSkinsConfig } from './utils/skins'
 
@@ -156,7 +156,8 @@ export abstract class WorldRendererCommon<WorkerSend = any, WorkerReceive = any>
   abstract changeBackgroundColor (color: [number, number, number]): void
 
   worldRendererConfig: WorldRendererConfig
-  playerState: PlayerStateRenderer
+  playerStateReactive: PlayerStateReactive
+  playerStateUtils: PlayerStateUtils
   reactiveState: RendererReactiveState
   mesherLogReader: MesherLogReader | undefined
   forceCallFromMesherReplayer = false
@@ -191,7 +192,8 @@ export abstract class WorldRendererCommon<WorkerSend = any, WorkerReceive = any>
   constructor (public readonly resourcesManager: ResourcesManagerTransferred, public displayOptions: DisplayWorldOptions, public initOptions: GraphicsInitOptions) {
     this.snapshotInitialValues()
     this.worldRendererConfig = displayOptions.inWorldRenderingConfig
-    this.playerState = displayOptions.playerState
+    this.playerStateReactive = displayOptions.playerStateReactive
+    this.playerStateUtils = getPlayerStateUtils(this.playerStateReactive)
     this.reactiveState = displayOptions.rendererState
     // this.mesherLogReader = new MesherLogReader(this)
     this.renderUpdateEmitter.on('update', () => {
@@ -304,11 +306,11 @@ export abstract class WorldRendererCommon<WorkerSend = any, WorkerReceive = any>
     }
   }
 
-  onReactivePlayerStateUpdated<T extends keyof typeof this.displayOptions.playerState.reactive>(key: T, callback: (value: typeof this.displayOptions.playerState.reactive[T]) => void, initial = true) {
+  onReactivePlayerStateUpdated<T extends keyof PlayerStateReactive>(key: T, callback: (value: PlayerStateReactive[T]) => void, initial = true) {
     if (initial) {
-      callback(this.displayOptions.playerState.reactive[key])
+      callback(this.playerStateReactive[key])
     }
-    subscribeKey(this.displayOptions.playerState.reactive, key, callback)
+    subscribeKey(this.playerStateReactive, key, callback)
   }
 
   onReactiveConfigUpdated<T extends keyof typeof this.worldRendererConfig>(key: T, callback: (value: typeof this.worldRendererConfig[T]) => void) {

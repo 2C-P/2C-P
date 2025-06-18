@@ -197,7 +197,7 @@ export class PanoramaRenderer {
         version,
         worldView,
         inWorldRenderingConfig: defaultWorldRendererConfig,
-        playerState: getInitialPlayerStateRenderer(),
+        playerStateReactive: getInitialPlayerStateRenderer().reactive,
         rendererState: getDefaultRendererState().reactive,
         nonReactiveState: getDefaultRendererState().nonReactive
       }

@@ -1,5 +1,5 @@
 import { WorldDataEmitter, WorldDataEmitterWorker } from 'renderer/viewer/lib/worldDataEmitter'
-import { getInitialPlayerState, PlayerStateRenderer } from 'renderer/viewer/lib/basePlayerState'
+import { getInitialPlayerState, PlayerStateRenderer, PlayerStateReactive } from 'renderer/viewer/lib/basePlayerState'
 import { subscribeKey } from 'valtio/utils'
 import { defaultWorldRendererConfig, WorldRendererConfig } from 'renderer/viewer/lib/worldrendererCommon'
 import { Vec3 } from 'vec3'
@@ -67,7 +67,7 @@ export interface DisplayWorldOptions {
   version: string
   worldView: WorldDataEmitterWorker
   inWorldRenderingConfig: WorldRendererConfig
-  playerState: PlayerStateRenderer
+  playerStateReactive: PlayerStateReactive
   rendererState: RendererReactiveState
   nonReactiveState: NonReactiveState
 }
@@ -180,7 +180,7 @@ export class AppViewer {
     this.worldView!.listenToBot(bot)
   }
 
-  async startWorld (world, renderDistance: number, playerStateSend: PlayerStateRenderer = this.playerState) {
+  async startWorld (world, renderDistance: number, playerStateSend: PlayerStateRenderer = this.playerState.reactive) {
     if (this.currentDisplay === 'world') throw new Error('World already started')
     this.currentDisplay = 'world'
     const startPosition = bot.entity?.position ?? new Vec3(0, 64, 0)
@@ -192,7 +192,7 @@ export class AppViewer {
       version: this.resourcesManager.currentConfig!.version,
       worldView: this.worldView,
       inWorldRenderingConfig: this.inWorldRenderingConfig,
-      playerState: playerStateSend,
+      playerStateReactive: playerStateSend,
       rendererState: this.rendererState,
       nonReactiveState: this.nonReactiveState
     }
