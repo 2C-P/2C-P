@@ -831,6 +831,26 @@ export async function connect (connectOptions: ConnectOptions) {
       miscUiState.gameLoaded = true
       miscUiState.loadedServerIndex = connectOptions.serverIndex ?? ''
       customEvents.emit('gameLoaded')
+
+      // Test iOS Safari crash by creating memory pressure
+      if (appQueryParams.testIosCrash) {
+        setTimeout(() => {
+          console.log('Starting iOS crash test with memory pressure...')
+          // eslint-disable-next-line sonarjs/no-unused-collection
+          const arrays: number[][] = []
+          try {
+            // Create large arrays until we run out of memory
+            // eslint-disable-next-line no-constant-condition
+            while (true) {
+              const arr = Array.from({ length: 1024 * 1024 }).fill(0).map((_, i) => i)
+              arrays.push(arr)
+            }
+          } catch (e) {
+            console.error('Memory allocation failed:', e)
+          }
+        }, 1000)
+      }
+
       progress.end()
       setLoadingScreenStatus(undefined)
     } catch (err) {
