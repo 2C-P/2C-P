@@ -25,7 +25,7 @@ import * as Entity from './entity/EntityMesh'
 import { getMesh } from './entity/EntityMesh'
 import { WalkingGeneralSwing } from './entity/animations'
 import { disposeObject } from './threeJsUtils'
-import { armorModel, armorTextures } from './entity/armorModels'
+import { armorModel, elytraTexture, armorTextures } from './entity/armorModels'
 import { WorldRendererThree } from './worldrendererThree'
 
 export const TWEEN_DURATION = 120
@@ -1356,6 +1356,9 @@ export class Entities {
     if (isPlayer && entityMesh.playerObject) {
       const { playerObject } = entityMesh
       playerObject.backEquipment = entity.equipment.some((item) => item?.name === 'elytra') ? 'elytra' : 'cape'
+      if (playerObject.backEquipment === 'elytra') {
+        void this.loadAndApplyCape(entity.id, elytraTexture)
+      }
       if (playerObject.cape.map === null) {
         playerObject.cape.visible = false
       }
