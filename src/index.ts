@@ -209,10 +209,10 @@ export async function connect (connectOptions: ConnectOptions) {
 
   let ended = false
   let bot!: typeof __type_bot
+  let hadConnected = false
   const destroyAll = (wasKicked = false) => {
     if (ended) return
     loadingTimerState.loading = false
-    const hadConnected = !!bot
     if (!wasKicked && miscUiState.appConfig?.allowAutoConnect && appQueryParams.autoConnect && hadConnected) {
       location.reload()
     }
@@ -856,6 +856,7 @@ export async function connect (connectOptions: ConnectOptions) {
     } catch (err) {
       handleError(err)
     }
+    hadConnected = true
   }
   // don't use spawn event, player can be dead
   bot.once(spawnEarlier ? 'forcedMove' : 'health', displayWorld)
