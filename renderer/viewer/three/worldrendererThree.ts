@@ -111,7 +111,7 @@ export class WorldRendererThree extends WorldRendererCommon {
   }
 
   get cameraObject () {
-    return this.cameraContainer
+    return this.cameraGroupVr ?? this.cameraContainer
   }
 
   worldSwitchActions () {
