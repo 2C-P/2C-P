@@ -312,7 +312,12 @@ const markLocalStorageAsMigrated = (key: keyof StorageData) => {
   const data = localStorage.getItem(localStorageKey)
   if (data) {
     try {
-      localStorage.setItem(localStorageKey, JSON.stringify({ ...JSON.parse(data), migrated: Date.now() }))
+      const parsed = JSON.parse(data)
+      localStorage.setItem(
+        localStorageKey, JSON.stringify(typeof parsed === 'object' ? {
+          ...parsed, migrated: Date.now()
+        } : { data: parsed, migrated: Date.now() })
+      )
     } catch (err) {
     }
   }
