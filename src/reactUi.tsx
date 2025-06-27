@@ -229,6 +229,7 @@ const App = () => {
             <div />
           </RobustPortal>
           <EnterFullscreenButton />
+          <StorageConflictModal />
           <InGameUi />
           <RobustPortal to={document.querySelector('#ui-root')}>
             <AllWidgets />
@@ -248,7 +249,6 @@ const App = () => {
 
             <SelectOption />
             <CreditsAboutModal />
-            <StorageConflictModal />
             <NoModalFoundProvider />
           </RobustPortal>
           <RobustPortal to={document.body}>

@@ -120,7 +120,7 @@ const detectStorageConflicts = (): StorageConflict[] => {
         const localParsed = JSON.parse(localStorageValue)
         const cookieParsed = JSON.parse(cookieValue)
 
-        if (localParsed?.migrated) {
+        if (localStorage.getItem(`${localStorageKey}:migrated`)) {
           continue
         }
 
@@ -309,18 +309,7 @@ const markLocalStorageAsMigrated = (key: keyof StorageData) => {
     return
   }
 
-  const data = localStorage.getItem(localStorageKey)
-  if (data) {
-    try {
-      const parsed = JSON.parse(data)
-      localStorage.setItem(
-        localStorageKey, JSON.stringify(typeof parsed === 'object' ? {
-          ...parsed, migrated: Date.now()
-        } : { data: parsed, migrated: Date.now() })
-      )
-    } catch (err) {
-    }
-  }
+  localStorage.setItem(`${localStorageKey}:migrated`, 'true')
 }
 
 const saveKey = (key: keyof StorageData) => {

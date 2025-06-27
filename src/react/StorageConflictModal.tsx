@@ -34,6 +34,9 @@ export default () => {
         fontFamily: 'minecraft, monospace',
         textAlign: 'center',
         zIndex: 1000,
+        position: 'fixed',
+        left: 0,
+        right: 0
       }}>
         <div style={{
           fontSize: '16px',
