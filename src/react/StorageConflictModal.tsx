@@ -32,7 +32,8 @@ export default () => {
         margin: '10px',
         color: '#FFFFFF',
         fontFamily: 'minecraft, monospace',
-        textAlign: 'center'
+        textAlign: 'center',
+        zIndex: 1000,
       }}>
         <div style={{
           fontSize: '16px',
