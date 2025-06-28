@@ -117,8 +117,8 @@ importers:
         specifier: ^10.0.12
         version: 10.1.6
       flying-squid:
-        specifier: npm:@zardoy/flying-squid@^0.0.59
-        version: '@zardoy/flying-squid@0.0.59(encoding@0.1.13)'
+        specifier: npm:@zardoy/flying-squid@^0.0.62
+        version: '@zardoy/flying-squid@0.0.62(encoding@0.1.13)'
       framer-motion:
         specifier: ^12.9.2
         version: 12.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3410,8 +3410,8 @@ packages:
     engines: {node: '>=8'}
     hasBin: true
 
-  '@zardoy/flying-squid@0.0.59':
-    resolution: {integrity: sha512-Ztrmv127csGovqJEWEtT19y1wGEB5tIVfneQ3+p/TirP/bTGYpLlW+Ns4sSAc4KrewUP9PW/6L0AtB69CWhQFQ==}
+  '@zardoy/flying-squid@0.0.62':
+    resolution: {integrity: sha512-M6icydO/yrmwevBhmgKcqEPC63AhWfU/Es9N/uadVrmKaxGm2FQMMLcybbutRYm1xZ6qsdxDUOUZnN56PsVwfQ==}
     engines: {node: '>=8'}
     hasBin: true
 
@@ -13249,7 +13249,7 @@ snapshots:
       - encoding
       - supports-color
 
-  '@zardoy/flying-squid@0.0.59(encoding@0.1.13)':
+  '@zardoy/flying-squid@0.0.62(encoding@0.1.13)':
     dependencies:
       '@tootallnate/once': 2.0.0
       chalk: 5.4.1
