@@ -16,10 +16,14 @@ export default () => {
 
   if (!isModalActive/*  || conflicts.length === 0 */) return null
 
+  const clampText = (text: string) => {
+    return text.length > 30 ? text.slice(0, 30) + '...' : text
+  }
+
   const conflictText = conflicts.map(conflict => {
     const localTime = formatTimestamp(conflict.localStorageTimestamp)
     const cookieTime = formatTimestamp(conflict.cookieTimestamp)
-    return `${conflict.key}: LocalStorage (${localTime}) vs Cookie (${cookieTime})`
+    return `${conflict.key}: LocalStorage (${localTime}, ${clampText(conflict.localStorageValue)}) vs Cookie (${cookieTime}, ${clampText(conflict.cookieValue)})`
   }).join('\n')
 
   return (
