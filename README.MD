@@ -30,7 +30,7 @@ For building the project yourself / contributing, see [Development, Debugging & 
 - Support for custom rendering 3D engines. Modular architecture.
 - even even more!
 
-All components that are in [Storybook](https://mcraft.fun/storybook) are published as npm module and can be used in other projects: [`minecraft-react`](https://npmjs.com/minecraft-react)
+All components that are in [Storybook](https://minimap.mcraft.fun/storybook/) are published as npm module and can be used in other projects: [`minecraft-react`](https://npmjs.com/minecraft-react)
 
 ### Recommended Settings
 
