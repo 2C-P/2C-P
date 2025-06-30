@@ -157,6 +157,7 @@ const appConfig = defineConfig({
             'process.env.DISABLE_SERVICE_WORKER': JSON.stringify(disableServiceWorker),
             'process.env.INLINED_APP_CONFIG': JSON.stringify(configSource === 'BUNDLED' ? configJson : null),
             'process.env.ENABLE_COOKIE_STORAGE': JSON.stringify(process.env.ENABLE_COOKIE_STORAGE || true),
+            'process.env.COOKIE_STORAGE_PREFIX': JSON.stringify(process.env.COOKIE_STORAGE_PREFIX || ''),
         },
     },
     server: {
