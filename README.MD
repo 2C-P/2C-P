@@ -12,6 +12,9 @@ Don't confuse with [Eaglercraft](https://git.eaglercraft.rip/eaglercraft/eaglerc
 
 For building the project yourself / contributing, see [Development, Debugging & Contributing](#development-debugging--contributing). For reference at what and how web technologies / frameworks are used, see [TECH.md](./TECH.md) (also for comparison with Eaglercraft).
 
+> **Note**: You can deploy it on your own server in less than a minute using a one-liner script from [Minecraft Everywhere repo](https://github.com/zardoy/minecraft-everywhere)
+
+
 ### Big Features
 
 - Official Mineflayer [plugin integration](https://github.com/zardoy/mcraft-fun-mineflayer-plugin)! View / Control your bot remotely.
