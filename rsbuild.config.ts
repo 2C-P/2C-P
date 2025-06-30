@@ -111,6 +111,22 @@ const appConfig = defineConfig({
             js: 'source-map',
             css: true,
         },
+        minify: {
+            // js: false,
+            jsOptions: {
+                minimizerOptions: {
+                    mangle: {
+                        safari10: true,
+                        keep_classnames: true,
+                        keep_fnames: true,
+                        keep_private_props: true,
+                    },
+                    compress: {
+                        unused: true,
+                    },
+                },
+            },
+        },
         distPath: SINGLE_FILE_BUILD ? {
             html: './single',
         } : undefined,
