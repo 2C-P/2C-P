@@ -31,7 +31,8 @@
     "run-playground": "run-p watch-mesher watch-other-workers watch-playground",
     "run-all": "run-p start run-playground",
     "build-playground": "rsbuild build --config renderer/rsbuild.config.ts",
-    "watch-playground": "rsbuild dev --config renderer/rsbuild.config.ts"
+    "watch-playground": "rsbuild dev --config renderer/rsbuild.config.ts",
+    "update-git-deps": "tsx scripts/updateGitDeps.ts"
   },
   "keywords": [
     "prismarine",
@@ -210,7 +211,10 @@
       "prismarine-item": "latest"
     },
     "updateConfig": {
-      "ignoreDependencies": []
+      "ignoreDependencies": [
+        "browserfs",
+        "google-drive-browserfs"
+      ]
     },
     "patchedDependencies": {
       "pixelarticons@1.8.1": "patches/pixelarticons@1.8.1.patch",
