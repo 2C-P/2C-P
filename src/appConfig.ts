@@ -83,7 +83,7 @@ export const loadAppConfig = (appConfig: AppConfig) => {
     updateBinds(customKeymaps)
   }
 
-  appViewer.inWorldRenderingConfig.skinTexturesProxy = appConfig.skinTexturesProxy
+  appViewer?.appConfigUdpate()
 
   setStorageDataOnAppConfigLoad(appConfig)
 }
