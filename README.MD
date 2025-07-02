@@ -45,9 +45,12 @@ All components that are in [Storybook](https://minimap.mcraft.fun/storybook/) ar
 
 ### Browser Notes
 
-These browsers have issues with capturing pointer:
+This project is tested with BrowserStack ! [BrowserStack](https://www.browserstack.com/)
+
+Howerver, these browsers have issues:
 
 **Opera Mini**: Disable *mouse gestures* in browsre settings to avoid opening new tab on right click hold
+
 **Vivaldi**: Disable Controls -> *Raw Input* in game settings if experiencing issues
 
 ### Versions Support
