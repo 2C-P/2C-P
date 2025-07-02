@@ -1,3 +1,5 @@
+This project is tested with BrowserStack
+
 # Minecraft Web Client
 
 ![banner](./docs-assets/banner.jpg)
