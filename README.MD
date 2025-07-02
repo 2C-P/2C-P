@@ -127,7 +127,7 @@ Instead I recommend setting `options.debugLogNotFrequentPackets`. Also you can u
 
 - `bot` - Mineflayer bot instance. See Mineflayer documentation for more.
 - `viewer` - Three.js viewer instance, basically does all the rendering.
-- `viewer.world.sectionObjects` - Object with all active chunk sections (geometries) in the world. Each chunk section is a Three.js mesh or group.
+- `world.sectionObjects` - Object with all active chunk sections (geometries) in the world. Each chunk section is a Three.js mesh or group.
 - `debugSceneChunks` - The same as above, but relative to current bot position (e.g. 0,0 is the current chunk).
 - `debugChangedOptions` - See what options are changed. Don't change options here.
 - `localServer`/`server` - Only for singleplayer mode/host. Flying Squid server instance, see it's documentation for more.
@@ -136,7 +136,7 @@ Instead I recommend setting `options.debugLogNotFrequentPackets`. Also you can u
 
 - `nbt.simplify(someNbt)` - Simplifies nbt data, so it's easier to read.
 
-The most useful thing in devtools is the watch expression. You can add any expression there and it will be re-evaluated in real time. For example, you can add `viewer.camera.position` to see the camera position and so on.
+The most useful thing in devtools is the watch expression. You can add any expression there and it will be re-evaluated in real time. For example, you can add `camera.position` to see the camera position and so on.
 
 <img src="./docs-assets/watch-expr.png" alt="Watch expression" width="480"/>
 
