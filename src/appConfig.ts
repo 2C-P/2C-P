@@ -55,6 +55,7 @@ export type AppConfig = {
   showModsButton?: boolean
   defaultUsername?: string
   skinTexturesProxy?: string
+  alwaysReconnectButton?: boolean
 }
 
 export const loadAppConfig = (appConfig: AppConfig) => {
