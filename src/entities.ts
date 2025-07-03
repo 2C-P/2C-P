@@ -4,6 +4,7 @@ import tracker from '@nxg-org/mineflayer-tracker'
 import { loader as autoJumpPlugin } from '@nxg-org/mineflayer-auto-jump'
 import { subscribeKey } from 'valtio/utils'
 import { getThreeJsRendererMethods } from 'renderer/viewer/three/threeJsMethods'
+import { Team } from 'mineflayer'
 import { options, watchValue } from './optionsStorage'
 import { gameAdditionalState, miscUiState } from './globalState'
 import { EntityStatus } from './mineflayer/entityStatus'
@@ -237,4 +238,67 @@ customEvents.on('gameLoaded', () => {
     }
 
   })
+
+  bot.on('teamUpdated', (team: Team) => {
+    for (const entity of Object.values(bot.entities)) {
+      if (entity.type === 'player' && entity.username && team.members.includes(entity.username) || entity.uuid && team.members.includes(entity.uuid)) {
+        bot.emit('entityUpdate', entity)
+      }
+    }
+  })
+
+  const updateEntityNameTags = (team: Team) => {
+    for (const entity of Object.values(bot.entities)) {
+      const entityTeam = entity.type === 'player' && entity.username ? bot.teamMap[entity.username] : entity.uuid ? bot.teamMap[entity.uuid] : undefined
+      if ((entityTeam?.nameTagVisibility === 'hideForOwnTeam' && entityTeam.name === team.name)
+        || (entityTeam?.nameTagVisibility === 'hideForOtherTeams' && entityTeam.name !== team.name)) {
+        bot.emit('entityUpdate', entity)
+      }
+    }
+  }
+
+  const doEntitiesNeedUpdating = (team: Team) => {
+    return team.nameTagVisibility === 'never'
+      || (team.nameTagVisibility === 'hideForOtherTeams' && appViewer.playerState.reactive.team?.team !== team.team)
+      || (team.nameTagVisibility === 'hideForOwnTeam' && appViewer.playerState.reactive.team?.team === team.team)
+  }
+
+  bot.on('teamMemberAdded', (team: Team, members: string[]) => {
+    if (members.includes(bot.username) && appViewer.playerState.reactive.team?.team !== team.team) {
+      appViewer.playerState.reactive.team = team
+      // Player was added to a team, need to check if any entities need updating
+      updateEntityNameTags(team)
+    } else if (doEntitiesNeedUpdating(team)) {
+      // Need to update all entities that were added
+      for (const entity of Object.values(bot.entities)) {
+        if (entity.type === 'player' && entity.username && members.includes(entity.username) || entity.uuid && members.includes(entity.uuid)) {
+          bot.emit('entityUpdate', entity)
+        }
+      }
+    }
+  })
+
+  bot.on('teamMemberRemoved', (team: Team, members: string[]) => {
+    if (members.includes(bot.username) && appViewer.playerState.reactive.team?.team === team.team) {
+      appViewer.playerState.reactive.team = undefined
+      // Player was removed from a team, need to check if any entities need updating
+      updateEntityNameTags(team)
+    } else if (doEntitiesNeedUpdating(team)) {
+      // Need to update all entities that were removed
+      for (const entity of Object.values(bot.entities)) {
+        if (entity.type === 'player' && entity.username && members.includes(entity.username) || entity.uuid && members.includes(entity.uuid)) {
+          bot.emit('entityUpdate', entity)
+        }
+      }
+    }
+  })
+
+  bot.on('teamRemoved', (team: Team) => {
+    if (appViewer.playerState.reactive.team?.team === team.team) {
+      appViewer.playerState.reactive.team = undefined
+      // Player's team was removed, need to update all entities that are in a team
+      updateEntityNameTags(team)
+    }
+  })
+
 })
