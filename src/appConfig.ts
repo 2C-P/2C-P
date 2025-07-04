@@ -56,6 +56,7 @@ export type AppConfig = {
   defaultUsername?: string
   skinTexturesProxy?: string
   alwaysReconnectButton?: boolean
+  reportBugButtonWithReconnect?: boolean
 }
 
 export const loadAppConfig = (appConfig: AppConfig) => {
