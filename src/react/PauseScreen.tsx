@@ -294,12 +294,12 @@ export default () => {
           {fsState.inMemorySave && !fsState.syncFs && !fsState.isReadonly ? 'Save & Quit' : 'Disconnect & Reset'}
         </Button>
       </>}
-      {(true) && (
+      {(noConnection || appConfig?.alwaysReconnectButton) && (
         <div className={styles.row}>
-          <Button className="button" style={{ width: '98px' }} onClick={reconnectReload}>
+          <Button className="button" style={{ width: appConfig?.reportBugButtonWithReconnect ? '98px' : '204px' }} onClick={reconnectReload}>
             Reconnect
           </Button>
-          {true && (
+          {appConfig?.reportBugButtonWithReconnect && (
             <Button
               label="Report Problem"
               className="button"
