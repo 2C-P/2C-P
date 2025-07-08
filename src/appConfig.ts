@@ -24,6 +24,7 @@ export type MobileButtonConfig = {
   readonly icon?: string
   readonly action?: ActionType
   readonly actionHold?: ActionType | ActionHoldConfig
+  readonly iconStyle?: React.CSSProperties
 }
 
 export type AppConfig = {
@@ -57,9 +58,11 @@ export type AppConfig = {
   skinTexturesProxy?: string
   alwaysReconnectButton?: boolean
   reportBugButtonWithReconnect?: boolean
+  disabledCommands?: string[] // Array of command IDs to disable (e.g. ['general.jump', 'general.chat'])
 }
 
 export const loadAppConfig = (appConfig: AppConfig) => {
+
   if (miscUiState.appConfig) {
     Object.assign(miscUiState.appConfig, appConfig)
   } else {
