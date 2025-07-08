@@ -74,7 +74,7 @@ export const loadAppConfig = (appConfig: AppConfig) => {
       if (value) {
         disabledSettings.value.add(key)
         // since the setting is forced, we need to set it to that value
-        if (appConfig.defaultSettings?.[key] && !qsOptions[key]) {
+        if (appConfig.defaultSettings && key in appConfig.defaultSettings && !qsOptions[key]) {
           options[key] = appConfig.defaultSettings[key]
         }
       } else {
@@ -82,6 +82,7 @@ export const loadAppConfig = (appConfig: AppConfig) => {
       }
     }
   }
+  // todo apply defaultSettings to defaults even if not forced in case of remote config
 
   if (appConfig.keybindings) {
     Object.assign(customKeymaps, defaultsDeep(appConfig.keybindings, customKeymaps))
