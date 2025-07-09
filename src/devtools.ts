@@ -242,7 +242,7 @@ function collectAndSendMetrics () {
 }
 
 function getWebSocketUrl () {
-  const wsPort = process.env.WS_SERVER
+  const wsPort = process.env.WS_PORT
   if (!wsPort) return null
 
   const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
