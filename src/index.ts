@@ -982,7 +982,6 @@ const maybeEnterGame = () => {
   }
 
   if (appQueryParams.ip || appQueryParams.proxy) {
-    const waitAppConfigLoad = !appQueryParams.proxy
     const openServerAction = () => {
       if (appQueryParams.autoConnect && miscUiState.appConfig?.allowAutoConnect) {
         void connect({
@@ -1003,11 +1002,7 @@ const maybeEnterGame = () => {
     }
 
     // showModal({ reactType: 'empty' })
-    if (waitAppConfigLoad) {
-      return waitForConfigFsLoad(openServerAction)
-    }
-    openServerAction()
-    return
+    return waitForConfigFsLoad(openServerAction)
   }
 
   if (appQueryParams.connectPeer) {
