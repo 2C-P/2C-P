@@ -130,7 +130,8 @@ export default () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'flex-end',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        zIndex: -1
       }}
     >
       <div
