@@ -259,6 +259,7 @@ export const upInventoryItems = (isInventory: boolean, invWindow = lastWindow) =
   // inv.pwindow.inv.slots[2].blockData = getBlockData('dirt')
   const customSlots = mapSlots((isInventory ? bot.inventory : bot.currentWindow)!.slots)
   invWindow.pwindow.setSlots(customSlots)
+  return customSlots
 }
 
 export const onModalClose = (callback: () => any) => {
