@@ -343,8 +343,8 @@ importers:
         specifier: github:zardoy/mineflayer#gen-the-master
         version: https://codeload.github.com/zardoy/mineflayer/tar.gz/c9c77d6511e37c452ebe48790724da165d6ad448(encoding@0.1.13)
       mineflayer-mouse:
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.1.17
+        version: 0.1.17
       mineflayer-pathfinder:
         specifier: ^2.4.4
         version: 2.4.5
@@ -6667,8 +6667,8 @@ packages:
     resolution: {tarball: https://codeload.github.com/zardoy/mineflayer-item-map-downloader/tar.gz/a8d210ecdcf78dd082fa149a96e1612cc9747824}
     version: 1.2.0
 
-  mineflayer-mouse@0.1.14:
-    resolution: {integrity: sha512-DjytRMlRLxR44GqZ6udMgbMO4At7Ura5TQC80exRhzkfptyCGLTWzXaf0oeXSNYkNMnaaEv4XP/9YRwuvL+rsQ==}
+  mineflayer-mouse@0.1.17:
+    resolution: {integrity: sha512-0eCR8pnGb42Qd9QmAxOjl0PhA5Fa+9+6H1G/YsbsO5rg5mDf94Tusqp/8NAGLPQCPVDzbarLskXdjR3h0E0bEQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   mineflayer-pathfinder@2.4.5:
@@ -10294,7 +10294,7 @@ snapshots:
       '@babel/parser': 7.26.9
       '@babel/template': 7.26.9
       '@babel/types': 7.26.9
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -12864,7 +12864,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 6.1.0(typescript@5.5.4)
       '@typescript-eslint/utils': 6.1.0(eslint@8.57.1)(typescript@5.5.4)
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1
       eslint: 8.57.1
       ts-api-utils: 1.4.3(typescript@5.5.4)
     optionalDependencies:
@@ -12896,7 +12896,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 6.21.0
       '@typescript-eslint/visitor-keys': 6.21.0
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.3
@@ -12911,7 +12911,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.26.0
       '@typescript-eslint/visitor-keys': 8.26.0
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1
       fast-glob: 3.3.3
       is-glob: 4.0.3
       minimatch: 9.0.5
@@ -17338,7 +17338,7 @@ snapshots:
       - encoding
       - supports-color
 
-  mineflayer-mouse@0.1.14:
+  mineflayer-mouse@0.1.17:
     dependencies:
       change-case: 5.4.4
       debug: 4.4.1
@@ -18457,7 +18457,7 @@ snapshots:
   puppeteer-core@2.1.1:
     dependencies:
       '@types/mime-types': 2.1.4
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.1
       extract-zip: 1.7.0
       https-proxy-agent: 4.0.0
       mime: 2.6.0
