@@ -16,6 +16,7 @@ export default () => {
     registerSectionAnimationChannels()
     registeredJeiChannel()
     registerBlockInteractionsCustomizationChannel()
+    registerWaypointChannels()
   })
 }
 
@@ -61,6 +62,62 @@ const registerBlockInteractionsCustomizationChannel = () => {
       bot.mouse.settings.blockPlacePredictionDelay = config.blockPlacePredictionDelay
     }
   }, true)
+}
+
+const registerWaypointChannels = () => {
+  const packetStructure = [
+    'container',
+    [
+      {
+        name: 'id',
+        type: ['pstring', { countType: 'i16' }]
+      },
+      {
+        name: 'x',
+        type: 'f32'
+      },
+      {
+        name: 'y',
+        type: 'f32'
+      },
+      {
+        name: 'z',
+        type: 'f32'
+      },
+      {
+        name: 'minDistance',
+        type: 'i32'
+      },
+      {
+        name: 'label',
+        type: ['pstring', { countType: 'i16' }]
+      },
+      {
+        name: 'color',
+        type: 'i32'
+      }
+    ]
+  ]
+
+  registerChannel('minecraft-web-client:waypoint-add', packetStructure, (data) => {
+    getThreeJsRendererMethods()?.addWaypoint(data.id, data.x, data.y, data.z, {
+      minDistance: data.minDistance,
+      label: data.label || undefined,
+      color: data.color || undefined
+    })
+  })
+
+  registerChannel('minecraft-web-client:waypoint-delete', [
+    'container',
+    [
+      {
+        name: 'id',
+        type: ['pstring', { countType: 'i16' }]
+      }
+    ]
+  ], (data) => {
+    getThreeJsRendererMethods()?.removeWaypoint(data.id)
+  })
 }
 
 const registerBlockModelsChannel = () => {
