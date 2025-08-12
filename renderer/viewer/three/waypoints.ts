@@ -22,14 +22,10 @@ interface WaypointOptions {
 export class WaypointsRenderer {
   private readonly waypoints = new Map<string, Waypoint>()
   private readonly waypointScene = new THREE.Scene()
-  private readonly FIXED_REFERENCE = 10 // Fixed reference distance for scaling
 
   constructor (
     private readonly worldRenderer: WorldRendererThree
   ) {
-    if (process.env.NODE_ENV !== 'production') {
-      this.addWaypoint('spawn', 0, 0, 0, { })
-    }
   }
 
   private updateWaypoints () {
