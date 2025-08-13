@@ -85,7 +85,7 @@ export class WaypointsRenderer {
     this.waypointScene.add(sprite.group)
 
     this.waypoints.set(id, {
-      id, x, y, z, minDistance,
+      id, x: x + 0.5, y: y + 0.5, z: z + 0.5, minDistance,
       color, label,
       sprite,
     })

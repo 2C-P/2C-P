@@ -24,6 +24,7 @@ import { CameraShake } from './cameraShake'
 import { ThreeJsMedia } from './threeJsMedia'
 import { Fountain } from './threeJsParticles'
 import { WaypointsRenderer } from './waypoints'
+import { SkyboxRenderer } from './skyboxRenderer'
 
 type SectionKey = string
 
@@ -71,6 +72,7 @@ export class WorldRendererThree extends WorldRendererCommon {
   }
   fountains: Fountain[] = []
   DEBUG_RAYCAST = false
+  skyboxRenderer: SkyboxRenderer
 
   private currentPosTween?: tweenJs.Tween<THREE.Vector3>
   private currentRotTween?: tweenJs.Tween<{ pitch: number, yaw: number }>
@@ -93,6 +95,10 @@ export class WorldRendererThree extends WorldRendererCommon {
     this.cursorBlock = new CursorBlock(this)
     this.holdingBlock = new HoldingBlock(this)
     this.holdingBlockLeft = new HoldingBlock(this, true)
+
+    // Initialize skybox renderer
+    this.skyboxRenderer = new SkyboxRenderer(this.scene, null)
+    void this.skyboxRenderer.init()
 
     this.addDebugOverlay()
     this.resetScene()
@@ -708,6 +714,10 @@ export class WorldRendererThree extends WorldRendererCommon {
     this.cursorBlock.render()
     this.updateSectionOffsets()
 
+    // Update skybox position to follow camera
+    const cameraPos = this.getCameraPosition()
+    this.skyboxRenderer.update(cameraPos)
+
     const sizeOrFovChanged = sizeChanged || this.displayOptions.inWorldRenderingConfig.fov !== this.camera.fov
     if (sizeOrFovChanged) {
       const size = this.renderer.getSize(new THREE.Vector2())
@@ -947,6 +957,7 @@ export class WorldRendererThree extends WorldRendererCommon {
 
   destroy (): void {
     super.destroy()
+    this.skyboxRenderer.dispose()
   }
 
   shouldObjectVisible (object: THREE.Object3D) {
