@@ -196,6 +196,7 @@
   },
   "pnpm": {
     "overrides": {
+      "mineflayer": "github:zardoy/mineflayer#gen-the-master",
       "@nxg-org/mineflayer-physics-util": "1.8.10",
       "buffer": "^6.0.3",
       "vec3": "0.1.10",

@@ -77,7 +77,7 @@ export const defaultOptions = {
   frameLimit: false as number | false,
   alwaysBackupWorldBeforeLoading: undefined as boolean | undefined | null,
   alwaysShowMobileControls: false,
-  excludeCommunicationDebugEvents: [],
+  excludeCommunicationDebugEvents: [] as string[],
   preventDevReloadWhilePlaying: false,
   numWorkers: 4,
   localServerOptions: {
