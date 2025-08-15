@@ -84,6 +84,7 @@ export const defaultOptions = {
     gameMode: 1
   } as any,
   preferLoadReadonly: false,
+  experimentalClientSelfReload: true,
   disableLoadPrompts: false,
   guestUsername: 'guest',
   askGuestName: true,

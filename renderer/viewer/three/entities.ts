@@ -762,7 +762,6 @@ export class Entities {
       }, {
         faceCamera,
         use3D: !faceCamera, // Only use 3D for non-camera-facing items
-        depth: 0.03
       })
 
       let SCALE = 1

@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 export interface Create3DItemMeshOptions {
-  depth?: number
+  depth: number
   pixelSize?: number
 }
 
@@ -17,9 +17,9 @@ export interface Create3DItemMeshResult {
  */
 export function create3DItemMesh (
   canvas: HTMLCanvasElement,
-  options: Create3DItemMeshOptions = {}
+  options: Create3DItemMeshOptions
 ): Create3DItemMeshResult {
-  const { depth = 0.03, pixelSize } = options
+  const { depth, pixelSize } = options
 
   // Validate canvas dimensions
   if (canvas.width <= 0 || canvas.height <= 0) {
@@ -287,7 +287,7 @@ export function createItemMesh (
     depth?: number
   } = {}
 ): ItemMeshResult {
-  const { faceCamera = false, use3D = true, depth = 0.03 } = options
+  const { faceCamera = false, use3D = true, depth = 0.04 } = options
   const { u, v, sizeX, sizeY } = textureInfo
 
   if (faceCamera) {
@@ -403,7 +403,7 @@ export function createItemMesh (
  */
 export function createItemMeshFromCanvas (
   canvas: HTMLCanvasElement,
-  options: Create3DItemMeshOptions = {}
+  options: Create3DItemMeshOptions
 ): THREE.Mesh {
   const { geometry } = create3DItemMesh(canvas, options)
 
