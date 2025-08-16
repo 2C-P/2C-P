@@ -85,6 +85,7 @@ export const defaultOptions = {
   } as any,
   preferLoadReadonly: false,
   experimentalClientSelfReload: true,
+  remoteSoundsLoadTimeout: 500,
   disableLoadPrompts: false,
   guestUsername: 'guest',
   askGuestName: true,
