@@ -379,7 +379,6 @@ export class WorldDataEmitter extends (EventEmitter as new () => TypedEmitter<Wo
           chunksToUnload.push(p)
         }
       }
-      console.log('unloading', chunksToUnload.length, 'total now', Object.keys(this.loadedChunks).length)
       for (const p of chunksToUnload) {
         this.unloadChunk(p)
       }

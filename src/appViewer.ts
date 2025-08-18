@@ -201,7 +201,9 @@ export class AppViewer {
     this.worldView = new WorldDataEmitter(world, renderDistance, startPosition)
     this.worldView.panicChunksReload = () => {
       if (!options.experimentalClientSelfReload) return
-      displayClientChat(`[client] client panicked due to too long loading time. Soft reloading chunks...`)
+      if (process.env.NODE_ENV === 'development') {
+        displayClientChat(`[client] client panicked due to too long loading time. Soft reloading chunks...`)
+      }
       void reloadChunks()
     }
     window.worldView = this.worldView
