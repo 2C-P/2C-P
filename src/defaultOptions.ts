@@ -84,7 +84,7 @@ export const defaultOptions = {
     gameMode: 1
   } as any,
   preferLoadReadonly: false,
-  experimentalClientSelfReload: true,
+  experimentalClientSelfReload: false,
   remoteSoundsSupport: false,
   remoteSoundsLoadTimeout: 500,
   disableLoadPrompts: false,
