@@ -7,18 +7,15 @@ import { registerIdeChannels } from './core/ideChannels'
 export default () => {
   customEvents.on('mineflayerBotCreated', async () => {
     if (!options.customChannels) return
-    await new Promise(resolve => {
-      bot.once('login', () => {
-        resolve(true)
-      })
+    bot.once('login', () => {
+      registerBlockModelsChannel()
+      registerMediaChannels()
+      registerSectionAnimationChannels()
+      registeredJeiChannel()
+      registerBlockInteractionsCustomizationChannel()
+      registerWaypointChannels()
+      registerIdeChannels()
     })
-    registerBlockModelsChannel()
-    registerMediaChannels()
-    registerSectionAnimationChannels()
-    registeredJeiChannel()
-    registerBlockInteractionsCustomizationChannel()
-    registerWaypointChannels()
-    registerIdeChannels()
   })
 }
 
