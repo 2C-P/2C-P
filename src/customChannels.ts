@@ -47,19 +47,7 @@ const registerBlockInteractionsCustomizationChannel = () => {
 
   registerChannel(CHANNEL_NAME, packetStructure, (data) => {
     const config = JSON.parse(data.newConfiguration)
-    if (config.customBreakTime !== undefined && Object.values(config.customBreakTime).every(x => typeof x === 'number')) {
-      bot.mouse.customBreakTime = config.customBreakTime
-    }
-    if (config.customBreakTimeToolAllowance !== undefined) {
-      bot.mouse.customBreakTimeToolAllowance = new Set(config.customBreakTimeToolAllowance)
-    }
-
-    if (config.blockPlacePrediction !== undefined) {
-      bot.mouse.settings.blockPlacePrediction = config.blockPlacePrediction
-    }
-    if (config.blockPlacePredictionDelay !== undefined) {
-      bot.mouse.settings.blockPlacePredictionDelay = config.blockPlacePredictionDelay
-    }
+    bot.mouse.setConfigFromPacket(config)
   }, true)
 }
 

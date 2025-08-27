@@ -347,8 +347,8 @@ importers:
         specifier: github:zardoy/mineflayer#gen-the-master
         version: https://codeload.github.com/zardoy/mineflayer/tar.gz/86e65631e79c490021afc63c80091a7bb6019fa8(encoding@0.1.13)
       mineflayer-mouse:
-        specifier: ^0.1.17
-        version: 0.1.17
+        specifier: ^0.1.21
+        version: 0.1.21
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
@@ -6678,8 +6678,8 @@ packages:
     resolution: {tarball: https://codeload.github.com/zardoy/mineflayer-item-map-downloader/tar.gz/a8d210ecdcf78dd082fa149a96e1612cc9747824}
     version: 1.2.0
 
-  mineflayer-mouse@0.1.17:
-    resolution: {integrity: sha512-0eCR8pnGb42Qd9QmAxOjl0PhA5Fa+9+6H1G/YsbsO5rg5mDf94Tusqp/8NAGLPQCPVDzbarLskXdjR3h0E0bEQ==}
+  mineflayer-mouse@0.1.21:
+    resolution: {integrity: sha512-1XTVuw3twIrEcqQ1QRSB8NcStIUEZ+tbxiAG6rOrN/9M4thhtlS5PTJzFdmdrcYgWEBLvuOdJszaKE5zFfiXhg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   mineflayer@https://codeload.github.com/zardoy/mineflayer/tar.gz/86e65631e79c490021afc63c80091a7bb6019fa8:
@@ -17359,7 +17359,7 @@ snapshots:
       - encoding
       - supports-color
 
-  mineflayer-mouse@0.1.17:
+  mineflayer-mouse@0.1.21:
     dependencies:
       change-case: 5.4.4
       debug: 4.4.1
