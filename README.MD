@@ -176,6 +176,7 @@ Server specific:
 - `?lockConnect=true` - Only works then `ip` parameter is set. Disables cancel/save buttons and all inputs in the connect screen already set as parameters. Useful for integrates iframes.
 - `?autoConnect=true` - Only works then `ip` and `version` parameters are set and `allowAutoConnect` is `true` in config.json! Directly connects to the specified server. Useful for integrates iframes.
 - `?serversList=<list_or_url>` - `<list_or_url>` can be a list of servers in the format `ip:version,ip` or a url to a json file with the same format (array) or a txt file with line-delimited list of server IPs.
+- `?addPing=<ping>` - Add a latency to both sides of the connection. Useful for testing ping issues. For example `?addPing=100` will add 200ms to your ping.
 
 Single player specific:
 
