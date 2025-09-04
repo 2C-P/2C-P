@@ -767,12 +767,17 @@ export class WorldRendererThree extends WorldRendererCommon {
   }
 
   renderHead (position: Vec3, rotation: number, isWall: boolean, blockEntity) {
-    const textures = blockEntity.SkullOwner?.Properties?.textures[0]
-    if (!textures) return
+    let textureData: string
+    if (blockEntity.SkullOwner) {
+      textureData = blockEntity.SkullOwner.Properties?.textures?.[0]?.Value
+    } else {
+      textureData = blockEntity.profile?.properties?.find(p => p.name === 'textures')?.value
+    }
+    if (!textureData) return
 
     try {
-      const textureData = JSON.parse(Buffer.from(textures.Value, 'base64').toString())
-      let skinUrl = textureData.textures?.SKIN?.url
+      const decodedData = JSON.parse(Buffer.from(textureData, 'base64').toString())
+      let skinUrl = decodedData.textures?.SKIN?.url
       const { skinTexturesProxy } = this.worldRendererConfig
       if (skinTexturesProxy) {
         skinUrl = skinUrl?.replace('http://textures.minecraft.net/', skinTexturesProxy)
