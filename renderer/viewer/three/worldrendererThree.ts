@@ -769,7 +769,7 @@ export class WorldRendererThree extends WorldRendererCommon {
   renderHead (position: Vec3, rotation: number, isWall: boolean, blockEntity) {
     let textureData: string
     if (blockEntity.SkullOwner) {
-      textureData = blockEntity.SkullOwner.Properties?.textures[0]?.Value
+      textureData = blockEntity.SkullOwner.Properties?.textures?.[0]?.Value
     } else {
       textureData = blockEntity.profile?.properties?.find(p => p.name === 'textures')?.value
     }
