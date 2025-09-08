@@ -12,6 +12,7 @@ import PrismarineChatLoader from 'prismarine-chat'
 import * as nbt from 'prismarine-nbt'
 import { BlockModel } from 'mc-assets'
 import { renderSlot } from 'renderer/viewer/three/renderSlot'
+import { loadSkinFromUsername } from 'renderer/viewer/lib/utils/skins'
 import Generic95 from '../assets/generic_95.png'
 import { appReplacableResources } from './generated/resources'
 import { activeModalStack, hideCurrentModal, hideModal, miscUiState, showModal } from './globalState'
@@ -23,6 +24,7 @@ import { getItemDescription } from './itemsDescriptions'
 import { MessageFormatPart } from './chatUtils'
 import { GeneralInputItem, getItemMetadata, getItemModelName, getItemNameRaw, RenderItem } from './mineflayer/items'
 import { playerState } from './mineflayer/playerState'
+import { modelViewerState } from './react/OverlayModelViewer'
 
 const loadedImagesCache = new Map<string, HTMLImageElement | ImageBitmap>()
 const cleanLoadedImagesCache = () => {
@@ -39,6 +41,34 @@ let PrismarineItem: typeof Item
 export const jeiCustomCategories = proxy({
   value: [] as Array<{ id: string, categoryTitle: string, items: any[] }>
 })
+
+let remotePlayerSkin: string | undefined | Promise<string>
+
+export const showInventoryPlayer = () => {
+  modelViewerState.model = {
+    positioning: {
+      windowWidth: 176,
+      windowHeight: 166,
+      x: 25,
+      y: 8,
+      width: 50,
+      height: 70,
+      scaled: true,
+      onlyInitialScale: true,
+      followCursor: true,
+    },
+    // models: ['https://bucket.mcraft.fun/sitarbuckss.glb'],
+    // debug: true,
+    steveModelSkin: appViewer.playerState.reactive.playerSkin ?? (typeof remotePlayerSkin === 'string' ? remotePlayerSkin : ''),
+  }
+  if (remotePlayerSkin === undefined && !appViewer.playerState.reactive.playerSkin) {
+    remotePlayerSkin = loadSkinFromUsername(bot.username, 'skin').then(a => {
+      setTimeout(() => { showInventoryPlayer() }, 0) // todo patch instead and make reactive
+      remotePlayerSkin = a ?? ''
+      return remotePlayerSkin
+    })
+  }
+}
 
 export const onGameLoad = () => {
   version = bot.version
@@ -392,7 +422,12 @@ const openWindow = (type: string | undefined, title: string | any = undefined) =
     miscUiState.displaySearchInput = false
     destroyFn()
     skipClosePacketSending = false
+
+    modelViewerState.model = undefined
   })
+  if (type === undefined) {
+    showInventoryPlayer()
+  }
   cleanLoadedImagesCache()
   const inv = openItemsCanvas(type)
   inv.canvasManager.children[0].mobileHelpers = miscUiState.currentTouch

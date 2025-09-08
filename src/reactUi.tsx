@@ -68,6 +68,7 @@ import FullscreenTime from './react/FullscreenTime'
 import StorageConflictModal from './react/StorageConflictModal'
 import FireRenderer from './react/FireRenderer'
 import MonacoEditor from './react/MonacoEditor'
+import OverlayModelViewer from './react/OverlayModelViewer'
 
 const isFirefox = ua.getBrowser().name === 'Firefox'
 if (isFirefox) {
@@ -259,6 +260,7 @@ const App = () => {
             </div>
             <div />
             <DebugEdges />
+            <OverlayModelViewer />
             <MonacoEditor />
             <DebugResponseTimeIndicator />
           </RobustPortal>
