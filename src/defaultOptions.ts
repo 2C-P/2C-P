@@ -41,6 +41,7 @@ export const defaultOptions = {
   renderEars: true,
   lowMemoryMode: false,
   starfieldRendering: true,
+  defaultSkybox: true,
   enabledResourcepack: null as string | null,
   useVersionsTextures: 'latest',
   serverResourcePacks: 'prompt' as 'prompt' | 'always' | 'never',

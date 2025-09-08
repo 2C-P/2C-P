@@ -98,7 +98,7 @@ export class WorldRendererThree extends WorldRendererCommon {
     this.holdingBlockLeft = new HoldingBlock(this, true)
 
     // Initialize skybox renderer
-    this.skyboxRenderer = new SkyboxRenderer(this.scene, null)
+    this.skyboxRenderer = new SkyboxRenderer(this.scene, this.worldRendererConfig.defaultSkybox, null)
     void this.skyboxRenderer.init()
 
     this.addDebugOverlay()
@@ -205,6 +205,9 @@ export class WorldRendererThree extends WorldRendererCommon {
     super.watchReactiveConfig()
     this.onReactiveConfigUpdated('showChunkBorders', (value) => {
       this.updateShowChunksBorder(value)
+    })
+    this.onReactiveConfigUpdated('defaultSkybox', (value) => {
+      this.skyboxRenderer.updateDefaultSkybox(value)
     })
   }
 

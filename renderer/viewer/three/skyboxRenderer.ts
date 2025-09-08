@@ -18,7 +18,7 @@ export class SkyboxRenderer {
   private fogBrightness = 0
   private prevFogBrightness = 0
 
-  constructor (private readonly scene: THREE.Scene, public initialImage: string | null) {
+  constructor (private readonly scene: THREE.Scene, public defaultSkybox: boolean, public initialImage: string | null) {
     if (!initialImage) {
       this.createGradientSky()
     }
@@ -116,6 +116,12 @@ export class SkyboxRenderer {
   updateWaterState (inWater: boolean, waterBreathing: boolean) {
     this.inWater = inWater
     this.waterBreathing = waterBreathing
+    this.updateSkyColors()
+  }
+
+  // Update default skybox setting
+  updateDefaultSkybox (defaultSkybox: boolean) {
+    this.defaultSkybox = defaultSkybox
     this.updateSkyColors()
   }
 
@@ -278,6 +284,23 @@ export class SkyboxRenderer {
 
   private updateSkyColors () {
     if (!this.skyMesh || !this.voidMesh) return
+
+    // If default skybox is disabled, hide the skybox meshes
+    if (!this.defaultSkybox) {
+      this.skyMesh.visible = false
+      this.voidMesh.visible = false
+      if (this.mesh) {
+        this.mesh.visible = false
+      }
+      return
+    }
+
+    // Show skybox meshes when default skybox is enabled
+    this.skyMesh.visible = true
+    this.voidMesh.visible = true
+    if (this.mesh) {
+      this.mesh.visible = true
+    }
 
     // Update fog brightness with smooth transition
     this.prevFogBrightness = this.fogBrightness

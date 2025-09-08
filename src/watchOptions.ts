@@ -117,6 +117,10 @@ export const watchOptionsAfterViewerInit = () => {
   })
 
   watchValue(options, o => {
+    appViewer.inWorldRenderingConfig.defaultSkybox = o.defaultSkybox
+  })
+
+  watchValue(options, o => {
     // appViewer.inWorldRenderingConfig.neighborChunkUpdates = o.neighborChunkUpdates
   })
 }
