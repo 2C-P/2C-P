@@ -84,6 +84,7 @@ export const defaultOptions = {
   localServerOptions: {
     gameMode: 1
   } as any,
+  saveLoginPassword: 'prompt' as 'prompt' | 'never' | 'always',
   preferLoadReadonly: false,
   experimentalClientSelfReload: false,
   remoteSoundsSupport: false,

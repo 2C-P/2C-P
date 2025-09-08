@@ -551,6 +551,16 @@ export const guiOptionsScheme: {
       },
     },
     {
+      saveLoginPassword: {
+        tooltip: 'Controls whether to save login passwords for servers in this browser memory.',
+        values: [
+          'prompt',
+          'always',
+          'never'
+        ]
+      },
+    },
+    {
       custom () {
         const { serversAutoVersionSelect } = useSnapshot(options)
         const allVersions = [...[...supportedVersions].sort((a, b) => versionToNumber(a) - versionToNumber(b)), 'latest', 'auto']
