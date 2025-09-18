@@ -6,6 +6,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { applySkinToPlayerObject, createPlayerObject, PlayerObjectType } from '../../renderer/viewer/lib/createPlayerObject'
 import { currentScaling } from '../scaleInterface'
+import { activeModalStack } from '../globalState'
 
 THREE.ColorManagement.enabled = false
 
@@ -29,6 +30,7 @@ export const modelViewerState = proxy({
     modelCustomization?: { [modelUrl: string]: { color?: string, opacity?: number, metalness?: number, roughness?: number } }
     resetRotationOnReleae?: boolean
     continiousRender?: boolean
+    alwaysRender?: boolean
   }
 })
 globalThis.modelViewerState = modelViewerState
@@ -74,6 +76,15 @@ globalThis.getModelViewerValues = () => {
     }
   }
 }
+
+subscribe(activeModalStack, () => {
+  if (!modelViewerState.model || !modelViewerState.model?.alwaysRender) {
+    return
+  }
+  if (activeModalStack.length === 0) {
+    modelViewerState.model = undefined
+  }
+})
 
 export default () => {
   const { model } = useSnapshot(modelViewerState)

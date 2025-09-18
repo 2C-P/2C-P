@@ -470,6 +470,7 @@ const openWindow = (type: string | undefined, title: string | any = undefined) =
       const isRightClick = type === 'rightclick'
       const isLeftClick = type === 'leftclick'
       if (isLeftClick || isRightClick) {
+        modelViewerState.model = undefined
         inv.canvasManager.children[0].showRecipesOrUsages(isLeftClick, item)
       }
     } else {
@@ -501,6 +502,7 @@ const openWindow = (type: string | undefined, title: string | any = undefined) =
       if (freeSlot === null) return
       void bot.creative.setInventorySlot(freeSlot, item)
     } else {
+      modelViewerState.model = undefined
       inv.canvasManager.children[0].showRecipesOrUsages(!isRightclick, mapSlots([item], true)[0])
     }
   }
