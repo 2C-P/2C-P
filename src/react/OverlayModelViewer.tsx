@@ -119,11 +119,15 @@ export default () => {
     modelLoaders.current.set(modelUrl, loader)
 
     const onLoad = (object: THREE.Object3D) => {
-      // Apply customization if available
+      // Apply customization if available and enable shadows
       const customization = model?.modelCustomization?.[modelUrl]
-      if (customization) {
-        object.traverse((child) => {
-          if (child instanceof THREE.Mesh && child.material) {
+      object.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          // Enable shadow casting and receiving for all meshes
+          child.castShadow = true
+          child.receiveShadow = true
+
+          if (child.material && customization) {
             const material = child.material as THREE.MeshStandardMaterial
             if (customization.color) {
               material.color.setHex(parseInt(customization.color.replace('#', ''), 16))
@@ -139,8 +143,8 @@ export default () => {
               material.roughness = customization.roughness
             }
           }
-        })
-      }
+        }
+      })
 
       // Center and scale model
       const box = new THREE.Box3().setFromObject(object)
@@ -259,6 +263,12 @@ export default () => {
     }
     renderer.setPixelRatio(scale)
     renderer.setSize(model.positioning.width, model.positioning.height)
+
+    // Enable shadow rendering for depth and realism
+    renderer.shadowMap.enabled = true
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap // Soft shadows for better quality
+    renderer.shadowMap.autoUpdate = true
+
     containerRef.current.appendChild(renderer.domElement)
 
     // Setup controls
@@ -270,9 +280,29 @@ export default () => {
     controls.enableDamping = true
     controls.dampingFactor = 0.05
 
-    // Add ambient light
-    const ambientLight = new THREE.AmbientLight(0xff_ff_ff, 1)
+    // Add ambient light for overall illumination
+    const ambientLight = new THREE.AmbientLight(0xff_ff_ff, 0.4) // Reduced intensity to allow shadows
     scene.add(ambientLight)
+
+    // Add directional light for shadows and depth (similar to Minecraft inventory lighting)
+    const directionalLight = new THREE.DirectionalLight(0xff_ff_ff, 0.6)
+    directionalLight.position.set(2, 2, 2) // Position light from top-right-front
+    directionalLight.target.position.set(0, 0, 0) // Point towards center of scene
+
+    // Configure shadow properties for optimal quality
+    directionalLight.castShadow = true
+    directionalLight.shadow.mapSize.width = 2048 // High resolution shadow map
+    directionalLight.shadow.mapSize.height = 2048
+    directionalLight.shadow.camera.near = 0.1
+    directionalLight.shadow.camera.far = 10
+    directionalLight.shadow.camera.left = -3
+    directionalLight.shadow.camera.right = 3
+    directionalLight.shadow.camera.top = 3
+    directionalLight.shadow.camera.bottom = -3
+    directionalLight.shadow.bias = -0.0001 // Reduce shadow acne
+
+    scene.add(directionalLight)
+    scene.add(directionalLight.target)
 
     // Cursor following function
     const updatePlayerLookAt = () => {
@@ -340,6 +370,14 @@ export default () => {
         // Create player model
         const { playerObject, wrapper } = createPlayerObject({
           scale: 1 // Start with base scale, will adjust below
+        })
+
+        // Enable shadows for player object
+        wrapper.traverse((child) => {
+          if (child instanceof THREE.Mesh) {
+            child.castShadow = true
+            child.receiveShadow = true
+          }
         })
 
         // Calculate proper scale and positioning for camera view
