@@ -2,9 +2,9 @@
 
 Minecraft **clone** rewritten in TypeScript using the best modern web technologies. Minecraft vanilla-compatible client and integrated server packaged into a single web app.
 
-You can try this out at [mcraft.fun](https://mcraft.fun/), [pcm.gg](https://pcm.gg) (short link), [mcon.vercel.app](https://mcon.vercel.app/) or the GitHub pages deploy. Every commit from the default (`develop`) branch is deployed to [s.mcraft.fun](https://s.mcraft.fun/) and [s.pcm.gg](https://s.pcm.gg/) - so it's usually newer, but might be less stable.
+You can try this out at [2c-p.github.io](https://2c-p.github.io), [pcm.gg](https://pcm.gg) (short link), [mcon.vercel.app](https://mcon.vercel.app/) or the GitHub pages deploy. Every commit from the default (`develop`) branch is deployed to [s.mcraft.fun](https://s.mcraft.fun/) and [s.pcm.gg](https://s.pcm.gg/) - so it's usually newer, but might be less stable.
 
-> For Turkey/Russia use [ru.mcraft.fun](https://ru.mcraft.fun/) (since Cloudflare is blocked)
+> For Turkey/Russia use [2c-p.github.io](2c-p.github.io/)
 
 Don't confuse with [Eaglercraft](https://git.eaglercraft.rip/eaglercraft/eaglercraft-1.8) which is a REAL vanilla Minecraft Java edition port to the web (but with its own limitations). Eaglercraft is a fully playable solution, meanwhile this project is aimed for *device-compatiiblity* and better performance so it feels portable, flexible and lightweight. It's also a very strong example on how to build true HTML games for the web at scale entirely with the JS ecosystem. Have fun!
 
